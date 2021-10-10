@@ -21,7 +21,6 @@
             <groupId>com.github.thorbenkuck</groupId>
             <artifactId>ddt-api</artifactId>
             <version>${ddt-api.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

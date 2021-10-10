@@ -15,7 +15,7 @@
         <!-- Framework Versions -->
         <google-auto-service.version>1.0</google-auto-service.version>
         <junit.version>5.8.1</junit.version>
-        <junit-platform-engine.version>1.7.2</junit-platform-engine.version>
+        <junit-platform-engine.version>1.8.1</junit-platform-engine.version>
         <jackson.verion>2.12.3</jackson.verion>
 
         <!-- Project Versions -->

@@ -1,9 +1,9 @@
 package com.github.thorbenkuck.ddt.api.domain;
 
+import com.github.thorbenkuck.ddt.api.domain.builder.TestSuiteBuilder;
 import com.github.thorbenkuck.ddt.api.domain.factory.TestCaseEntry;
 import com.github.thorbenkuck.ddt.TestName;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -23,8 +23,8 @@ public interface TestContentFactory<Input, Expected> {
         return Arrays.asList(entries);
     }
 
-    default TestContentFactoryBuilder<Input, Expected> builder() {
-        return new TestContentFactoryBuilder<>();
+    default TestSuiteBuilder<Input, Expected> builder() {
+        return new TestSuiteBuilder<>();
     }
 
     default String name() {
@@ -51,35 +51,4 @@ public interface TestContentFactory<Input, Expected> {
         consumer.accept(builder.withName(name));
         return builder.build();
     }
-
-    class TestContentFactoryBuilder<Input, Expected> {
-        private final List<TestCaseEntry<Input, Expected>> content = new ArrayList<>();
-
-        public TestContentFactoryBuilder<Input, Expected> append(Input input) {
-            return append(TestCaseEntry.<Input, Expected>build().forInput(input));
-        }
-
-        public TestContentFactoryBuilder<Input, Expected> append(Input input, Expected expected) {
-            TestCaseEntry.<Input, Expected>build().forInput(input).expects(expected);
-            return append(TestCaseEntry.<Input, Expected>build().forInput(input).expects(expected));
-        }
-
-        public TestContentFactoryBuilder<Input, Expected> append(TestCaseEntry.Builder<Input, Expected> factoryResultBuilder) {
-            content.add(factoryResultBuilder.build());
-            return this;
-        }
-
-        public TestContentFactoryBuilder<Input, Expected> append(TestCaseEntry<Input, Expected> factoryResult) {
-            content.add(factoryResult);
-            return this;
-        }
-
-        public List<TestCaseEntry<Input, Expected>> build() {
-            List<TestCaseEntry<Input, Expected>> result = new ArrayList<>(content);
-            content.clear();
-
-            return result;
-        }
-    }
-
 }
