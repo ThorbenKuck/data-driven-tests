@@ -1,0 +1,139 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.thorbenkuck</groupId>
+    <artifactId>ddt-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>Data driven Tests Parent</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+
+        <!-- Framework Versions -->
+        <google-auto-service.version>1.0</google-auto-service.version>
+        <junit.version>5.8.1</junit.version>
+        <junit-platform-engine.version>1.7.2</junit-platform-engine.version>
+        <jackson.verion>2.12.3</jackson.verion>
+
+        <!-- Project Versions -->
+        <ddt-api.version>1.0.0</ddt-api.version>
+        <ddt-engine.version>1.0.0</ddt-engine.version>
+        <ddt-adapters.version>1.0.0</ddt-adapters.version>
+        <ddt-type-adapter-jackson.version>1.0.0</ddt-type-adapter-jackson.version>
+        <ddt-asserter-assertj.version>1.0.0</ddt-asserter-assertj.version>
+        <ddt-asserter-deepjson.version>1.0.0</ddt-asserter-deepjson.version>
+    </properties>
+
+    <modules>
+        <module>api</module>
+        <module>adapter</module>
+        <module>asserter</module>
+        <module>engine</module>
+        <module>bootstrap</module>
+    </modules>
+
+    <url>https://github.com/ThorbenKuck/data-driven-tests</url>
+    <description>Data driven tests</description>
+
+    <developers>
+        <developer>
+            <id>thorbenkuck</id>
+            <name>Thorben Kuck</name>
+            <email>thorben.kuck@gmail.com</email>
+        </developer>
+    </developers>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-engine</artifactId>
+                <version>${junit-platform-engine.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <name>jcenter</name>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:ThorbenKuck/MockK-Method-Probing.git</connection>
+        <url>scm:git:git@github.com:ThorbenKuck/MockK-Method-Probing.git</url>
+        <developerConnection>scm:git:git@github.com:ThorbenKuck/MockK-Method-Probing.git</developerConnection>
+        <tag>mockk-method-probe-1.0</tag>
+    </scm>
+</project>

@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ddt</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>Data driven Tests Bootstrap</name>
+
+    <parent>
+        <artifactId>ddt-parent</artifactId>
+        <groupId>com.github.thorbenkuck</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <url>https://github.com/ThorbenKuck/data-driven-tests</url>
+    <description>Data driven tests</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.thorbenkuck</groupId>
+            <artifactId>ddt-engine</artifactId>
+            <version>${ddt-engine.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.thorbenkuck</groupId>
+            <artifactId>ddt-type-adapter-jackson</artifactId>
+            <version>${ddt-type-adapter-jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.thorbenkuck</groupId>
+            <artifactId>ddt-asserter-assertj</artifactId>
+            <version>${ddt-asserter-assertj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.thorbenkuck</groupId>
+            <artifactId>ddt-asserter-deepjson</artifactId>
+            <version>${ddt-asserter-deepjson.version}</version>
+        </dependency>
+    </dependencies>
+</project>

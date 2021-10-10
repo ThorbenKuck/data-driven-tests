@@ -1,0 +1,12 @@
+{
+  "precondition":  {
+    "username": "Tester1",
+    "email": "test@test.test",
+    "password": "test",
+    "loginFlag": false
+  },
+  "loginUserDto": {
+    "email": "test@test.test",
+    "password": "test"
+  }
+}

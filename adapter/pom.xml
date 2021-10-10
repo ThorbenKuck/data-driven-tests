@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ddt-type-adapter-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>Data driven Tests Adapters-Parent</name>
+
+    <parent>
+        <artifactId>ddt-parent</artifactId>
+        <groupId>com.github.thorbenkuck</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <url>https://github.com/ThorbenKuck/data-driven-tests</url>
+    <description>Data driven tests Adapters</description>
+
+    <modules>
+        <module>jackson</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.thorbenkuck</groupId>
+            <artifactId>ddt-api</artifactId>
+            <version>${ddt-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>${google-auto-service.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

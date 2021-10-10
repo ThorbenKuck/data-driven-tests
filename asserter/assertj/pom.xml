@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ddt-asserter-assertj</artifactId>
+    <version>${ddt-asserter-assertj.version}</version>
+    <packaging>jar</packaging>
+    <name>Data driven Tests Asserter for AssertJ</name>
+
+    <parent>
+        <artifactId>ddt-asserter-parent</artifactId>
+        <groupId>com.github.thorbenkuck</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <url>https://github.com/ThorbenKuck/data-driven-tests</url>
+    <description>Data driven tests Asserter utilizing AssertJ</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>${google-auto-service.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>
