@@ -1,9 +1,8 @@
 package com.github.thorbenkuck.ddt;
 
 import com.github.thorbenkuck.ddt.api.annotations.TestScenario;
-import com.github.thorbenkuck.ddt.descriptors.TestClassDescriptor;
+import com.github.thorbenkuck.ddt.selectors.*;
 import org.junit.platform.commons.support.AnnotationSupport;
-import org.junit.platform.commons.support.ReflectionSupport;
 import org.junit.platform.commons.util.ReflectionUtils;
 import org.junit.platform.engine.*;
 import org.junit.platform.engine.discovery.*;
@@ -11,14 +10,14 @@ import org.junit.platform.engine.support.descriptor.EngineDescriptor;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public class DataDrivenTestEngine implements TestEngine {
 
     private static final String ID = "DataDriveTestEngine";
 
-    private static final Predicate<Method> IS_DATA_DRIVEN_TEST_METHOD = method -> {
+    public static final Predicate<Method> IS_DATA_DRIVEN_TEST_METHOD = method -> {
         if (!AnnotationSupport.isAnnotated(method, TestScenario.class)) {
             return false;
         }
@@ -41,7 +40,7 @@ public class DataDrivenTestEngine implements TestEngine {
         }
     };
 
-    private static final Predicate<Class<?>> IS_CLASS_WITH_DATA_DRIVEN_TEST_METHOD = clazz -> {
+    public static final Predicate<Class<?>> IS_CLASS_WITH_DATA_DRIVEN_TEST_METHOD = clazz -> {
         if (ReflectionUtils.isAbstract(clazz)) {
             return false;
         }
@@ -56,6 +55,16 @@ public class DataDrivenTestEngine implements TestEngine {
                 .anyMatch(IS_DATA_DRIVEN_TEST_METHOD);
     };
 
+    private static final DdtSelectorProcessProcessor selectorProcess = new DdtSelectorProcessProcessor();
+
+    static {
+        selectorProcess.register(MethodSelector.class, new DdtMethodSelectorProcessor());
+        selectorProcess.register(ClassSelector.class, new DdtClassSelectorProcessor());
+        selectorProcess.register(PackageSelector.class, new DdtPackageSelectorProcessor());
+        selectorProcess.register(ModuleSelector.class, new DdtModuleSelectorProcessor());
+        selectorProcess.register(ClasspathRootSelector.class, new DdtClassPathRootSelectorProcessor());
+    }
+
     @Override
     public String getId() {
         return ID;
@@ -65,51 +74,10 @@ public class DataDrivenTestEngine implements TestEngine {
     public TestDescriptor discover(EngineDiscoveryRequest discoveryRequest, UniqueId engineId) {
         EngineDescriptor engineDescriptor = new EngineDescriptor(engineId, "Data Driven Tests Engine");
 
-        // TODO Make me beautiful :(
-        handleStream(discoveryRequest.getSelectorsByType(MethodSelector.class)
-                .stream()
-                .map(MethodSelector::getJavaClass), engineId, engineDescriptor);
+        List<TestDescriptor> descriptors = selectorProcess.processAll(discoveryRequest, engineId);
+        descriptors.forEach(engineDescriptor::addChild);
 
-        handleStream(discoveryRequest.getSelectorsByType(ClassSelector.class)
-                .stream()
-                .map(ClassSelector::getJavaClass), engineId, engineDescriptor);
-
-        handleStream(discoveryRequest.getSelectorsByType(PackageSelector.class)
-                .stream()
-                .flatMap(packageSelector -> ReflectionSupport.findAllClassesInPackage(
-                        packageSelector.getPackageName(),
-                        IS_CLASS_WITH_DATA_DRIVEN_TEST_METHOD,
-                        name -> true
-                ).stream()), engineId, engineDescriptor);
-
-        handleStream(discoveryRequest.getSelectorsByType(ModuleSelector.class)
-                .stream()
-                .flatMap(packageSelector -> ReflectionSupport.findAllClassesInModule(
-                        packageSelector.getModuleName(),
-                        IS_CLASS_WITH_DATA_DRIVEN_TEST_METHOD,
-                        name -> true
-                ).stream()), engineId, engineDescriptor);
-
-        handleStream(discoveryRequest.getSelectorsByType(ClasspathRootSelector.class)
-                .stream()
-                .flatMap(packageSelector -> ReflectionSupport.findAllClassesInClasspathRoot(
-                        packageSelector.getClasspathRoot(),
-                        IS_CLASS_WITH_DATA_DRIVEN_TEST_METHOD,
-                        name -> true
-                ).stream()), engineId, engineDescriptor);
         return engineDescriptor;
-    }
-
-    private void handleStream(Stream<Class<?>> stream, UniqueId engineId, EngineDescriptor engineDescriptor) {
-        stream.distinct().forEach(discoveryPair -> append(engineId, discoveryPair, engineDescriptor));
-    }
-
-    private void append(UniqueId engineId, Class<?> clazz, EngineDescriptor engineDescriptor) {
-        TestClassDescriptor classDescriptor = new TestClassDescriptor(
-                engineId,
-                clazz
-        );
-        engineDescriptor.addChild(classDescriptor.resolve());
     }
 
     @Override

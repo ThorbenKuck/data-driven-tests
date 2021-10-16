@@ -1,23 +1,41 @@
 package com.github.thorbenkuck.ddt.descriptors;
 
-import com.github.thorbenkuck.ddt.api.annotations.TestScenario;
-import com.github.thorbenkuck.ddt.Annotations;
 import com.github.thorbenkuck.ddt.execution.LifeCycle;
 import com.github.thorbenkuck.ddt.execution.context.ConfigurableExecutionContext;
 import org.junit.platform.engine.UniqueId;
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
 import org.junit.platform.engine.support.descriptor.ClassSource;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.github.thorbenkuck.ddt.DataDrivenTestEngine.IS_DATA_DRIVEN_TEST_METHOD;
 
 public class TestClassDescriptor extends AbstractTestDescriptor implements DataDrivenDescriptor {
 
     private final Class<?> root;
+    private final List<Method> methods;
     private int started = 0;
 
-    public TestClassDescriptor(UniqueId engineId, Class<?> root) {
+    private TestClassDescriptor(UniqueId engineId, Class<?> root, List<Method> methods) {
         super(engineId.append("class", root.getName()), root.getSimpleName(), ClassSource.from(root));
         this.root = root;
+        this.methods = methods;
+    }
+
+    public static TestClassDescriptor build(UniqueId engineId, Class<?> root, List<Method> methods) {
+        if(methods.isEmpty()) {
+            throw new IllegalArgumentException("A TestClassDescriptor requires at minimum one method to execute");
+        }
+        return new TestClassDescriptor(engineId, root, methods).resolve();
+    }
+
+    public static TestClassDescriptor build(UniqueId engineId, Class<?> root) {
+        return build(engineId, root, Arrays.stream(root.getMethods())
+                        .filter(IS_DATA_DRIVEN_TEST_METHOD)
+                        .collect(Collectors.toList()));
     }
 
     @Override
@@ -26,8 +44,7 @@ public class TestClassDescriptor extends AbstractTestDescriptor implements DataD
     }
 
     public TestClassDescriptor resolve() {
-        Arrays.stream(root.getMethods())
-                .filter(method -> !Annotations.deepFindIn(method, TestScenario.class).isEmpty())
+        methods.stream()
                 .map(method -> new TestMethodDescriptor(this, root, method))
                 .forEach(testMethodDescriptor -> addChild(testMethodDescriptor.resolve()));
 
@@ -40,7 +57,7 @@ public class TestClassDescriptor extends AbstractTestDescriptor implements DataD
     }
 
     public void started(ConfigurableExecutionContext context) {
-        if(started == 0) {
+        if (started == 0) {
             context.getTestExecutionState().testClassReached();
             started++;
         }
@@ -48,7 +65,7 @@ public class TestClassDescriptor extends AbstractTestDescriptor implements DataD
 
     public void ended(ConfigurableExecutionContext context) {
         started--;
-        if(started == 0) {
+        if (started == 0) {
             context.getTestExecutionState().testClassReached();
         }
     }
