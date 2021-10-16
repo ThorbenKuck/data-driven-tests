@@ -1,17 +1,11 @@
 package com.github.thorbenkuck.ddt;
 
-import com.github.thorbenkuck.ddt.api.annotations.TestScenario;
 import com.github.thorbenkuck.ddt.selectors.*;
-import org.junit.platform.commons.support.AnnotationSupport;
-import org.junit.platform.commons.util.ReflectionUtils;
 import org.junit.platform.engine.*;
 import org.junit.platform.engine.discovery.*;
 import org.junit.platform.engine.support.descriptor.EngineDescriptor;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class DataDrivenTestEngine implements TestEngine {
 
@@ -20,11 +14,11 @@ public class DataDrivenTestEngine implements TestEngine {
     private static final DdtSelectorProcessProcessor selectorProcess = new DdtSelectorProcessProcessor();
 
     static {
-        selectorProcess.register(MethodSelector.class, new DdtMethodSelectorProcessor());
-        selectorProcess.register(ClassSelector.class, new DdtClassSelectorProcessor());
-        selectorProcess.register(PackageSelector.class, new DdtPackageSelectorProcessor());
-        selectorProcess.register(ModuleSelector.class, new DdtModuleSelectorProcessor());
-        selectorProcess.register(ClasspathRootSelector.class, new DdtClassPathRootSelectorProcessor());
+        selectorProcess.register(MethodSelector.class, new MethodSelectorProcessor());
+        selectorProcess.register(ClassSelector.class, new ClassSelectorProcessor());
+        selectorProcess.register(PackageSelector.class, new PackageSelectorProcessor());
+        selectorProcess.register(ModuleSelector.class, new ModuleSelectorProcessor());
+        selectorProcess.register(ClasspathRootSelector.class, new ClassPathRootSelectorProcessor());
     }
 
     @Override

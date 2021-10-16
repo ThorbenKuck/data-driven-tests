@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DdtClassSelectorProcessor implements DdtSelectorProcessor<ClassSelector> {
+public class ClassSelectorProcessor implements SelectorProcessor<ClassSelector> {
 
     @Override
     public List<TestDescriptor> process(UniqueId uniqueId, ClassSelector methodSelector) {

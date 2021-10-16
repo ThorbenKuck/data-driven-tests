@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DdtModuleSelectorProcessor implements DdtSelectorProcessor<ModuleSelector> {
+public class ModuleSelectorProcessor implements SelectorProcessor<ModuleSelector> {
     @Override
     public List<TestDescriptor> process(UniqueId uniqueId, ModuleSelector selector) {
         List<Class<?>> allClassesInPackage = ReflectionSupport.findAllClassesInModule(

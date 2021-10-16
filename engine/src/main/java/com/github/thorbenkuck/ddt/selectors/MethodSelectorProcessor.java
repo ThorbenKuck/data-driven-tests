@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DdtMethodSelectorProcessor implements DdtSelectorProcessor<MethodSelector> {
+public class MethodSelectorProcessor implements SelectorProcessor<MethodSelector> {
 
     @Override
     public List<TestDescriptor> process(UniqueId uniqueId, MethodSelector methodSelector) {

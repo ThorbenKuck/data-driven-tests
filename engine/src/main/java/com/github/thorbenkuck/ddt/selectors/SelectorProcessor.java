@@ -6,7 +6,7 @@ import org.junit.platform.engine.UniqueId;
 
 import java.util.List;
 
-public interface DdtSelectorProcessor<T extends DiscoverySelector> {
+public interface SelectorProcessor<T extends DiscoverySelector> {
 
     List<TestDescriptor> process(UniqueId uniqueId, T selector);
 

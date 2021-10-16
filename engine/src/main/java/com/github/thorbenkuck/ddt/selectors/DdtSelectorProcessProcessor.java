@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class DdtSelectorProcessProcessor {
 
-    private final Map<Class<? extends DiscoverySelector>, DdtSelectorProcessor<? extends DiscoverySelector>> selectorMap = new HashMap<>();
+    private final Map<Class<? extends DiscoverySelector>, SelectorProcessor<? extends DiscoverySelector>> selectorMap = new HashMap<>();
 
     public List<TestDescriptor> processAll(EngineDiscoveryRequest discoveryRequest, UniqueId engineId) {
         List<TestDescriptor> descriptors = new ArrayList<>();
@@ -24,11 +24,11 @@ public class DdtSelectorProcessProcessor {
         return descriptors;
     }
 
-    public <T extends DiscoverySelector> void register(Class<T> type, DdtSelectorProcessor<T> processor) {
+    public <T extends DiscoverySelector> void register(Class<T> type, SelectorProcessor<T> processor) {
         selectorMap.put(type, processor);
     }
 
-    private <T extends DiscoverySelector> List<TestDescriptor> doSingleProcess(DiscoverySelector t, DdtSelectorProcessor<T> selector, UniqueId uniqueId) {
+    private <T extends DiscoverySelector> List<TestDescriptor> doSingleProcess(DiscoverySelector t, SelectorProcessor<T> selector, UniqueId uniqueId) {
         return selector.process(uniqueId, (T) t);
     }
 

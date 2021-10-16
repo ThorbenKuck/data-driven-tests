@@ -4,17 +4,18 @@ import com.github.thorbenkuck.ddt.descriptors.TestClassDescriptor;
 import org.junit.platform.commons.support.ReflectionSupport;
 import org.junit.platform.engine.TestDescriptor;
 import org.junit.platform.engine.UniqueId;
-import org.junit.platform.engine.discovery.PackageSelector;
+import org.junit.platform.engine.discovery.ClasspathRootSelector;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DdtPackageSelectorProcessor implements DdtSelectorProcessor<PackageSelector> {
+
+public class ClassPathRootSelectorProcessor implements SelectorProcessor<ClasspathRootSelector> {
     @Override
-    public List<TestDescriptor> process(UniqueId uniqueId, PackageSelector selector) {
-        List<Class<?>> allClassesInPackage = ReflectionSupport.findAllClassesInPackage(
-                selector.getPackageName(),
+    public List<TestDescriptor> process(UniqueId uniqueId, ClasspathRootSelector selector) {
+        List<Class<?>> allClassesInPackage = ReflectionSupport.findAllClassesInClasspathRoot(
+                selector.getClasspathRoot(),
                 Identification.containsTestScenario(),
                 name -> true
         );
