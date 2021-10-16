@@ -35,6 +35,7 @@ public class TestSuiteEntryBuilder<Input, Expected> {
         public TestSuiteBuilder<Input, Expected> expects(Expected expected) {
             return builder.append(
                     TestCaseEntry.<Input, Expected>build()
+                            .withName(name)
                             .forInput(input)
                             .expects(expected)
                             .build()
