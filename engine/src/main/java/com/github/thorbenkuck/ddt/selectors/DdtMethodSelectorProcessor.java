@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.github.thorbenkuck.ddt.DataDrivenTestEngine.IS_DATA_DRIVEN_TEST_METHOD;
-
 public class DdtMethodSelectorProcessor implements DdtSelectorProcessor<MethodSelector> {
 
     @Override
@@ -19,7 +17,7 @@ public class DdtMethodSelectorProcessor implements DdtSelectorProcessor<MethodSe
         ArrayList<TestDescriptor> testDescriptors = new ArrayList<>();
         Method javaMethod = methodSelector.getJavaMethod();
 
-        if (!IS_DATA_DRIVEN_TEST_METHOD.test(javaMethod)) {
+        if (!Identification.isTestScenario(javaMethod)) {
             return testDescriptors;
         }
 

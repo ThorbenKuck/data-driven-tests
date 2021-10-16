@@ -17,44 +17,6 @@ public class DataDrivenTestEngine implements TestEngine {
 
     private static final String ID = "DataDriveTestEngine";
 
-    public static final Predicate<Method> IS_DATA_DRIVEN_TEST_METHOD = method -> {
-        if (!AnnotationSupport.isAnnotated(method, TestScenario.class)) {
-            return false;
-        }
-        if (ReflectionUtils.isAbstract(method)) {
-            return false;
-        }
-        if (ReflectionUtils.isPrivate(method)) {
-            return false;
-        }
-        if (ReflectionUtils.isStatic(method)) {
-            return false;
-        }
-        if (method.getParameterCount() == 0 || method.getParameterCount() > 2) {
-            return false;
-        }
-        if (method.getReturnType().equals(Void.TYPE)) {
-            return method.getParameterCount() == 2;
-        } else {
-            return method.getParameterCount() == 1;
-        }
-    };
-
-    public static final Predicate<Class<?>> IS_CLASS_WITH_DATA_DRIVEN_TEST_METHOD = clazz -> {
-        if (ReflectionUtils.isAbstract(clazz)) {
-            return false;
-        }
-        if (ReflectionUtils.isPrivate(clazz)) {
-            return false;
-        }
-        if (ReflectionUtils.isStatic(clazz)) {
-            return false;
-        }
-
-        return Arrays.stream(clazz.getMethods())
-                .anyMatch(IS_DATA_DRIVEN_TEST_METHOD);
-    };
-
     private static final DdtSelectorProcessProcessor selectorProcess = new DdtSelectorProcessProcessor();
 
     static {

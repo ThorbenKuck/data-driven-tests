@@ -6,20 +6,16 @@ import org.junit.platform.engine.TestDescriptor;
 import org.junit.platform.engine.UniqueId;
 import org.junit.platform.engine.discovery.PackageSelector;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.github.thorbenkuck.ddt.DataDrivenTestEngine.IS_CLASS_WITH_DATA_DRIVEN_TEST_METHOD;
-import static com.github.thorbenkuck.ddt.DataDrivenTestEngine.IS_DATA_DRIVEN_TEST_METHOD;
 
 public class DdtPackageSelectorProcessor implements DdtSelectorProcessor<PackageSelector> {
     @Override
     public List<TestDescriptor> process(UniqueId uniqueId, PackageSelector selector) {
         List<Class<?>> allClassesInPackage = ReflectionSupport.findAllClassesInPackage(
                 selector.getPackageName(),
-                IS_CLASS_WITH_DATA_DRIVEN_TEST_METHOD,
+                Identification.containsTestScenario(),
                 name -> true
         );
         if (allClassesInPackage.isEmpty()) {

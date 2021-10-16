@@ -2,6 +2,7 @@ package com.github.thorbenkuck.ddt.descriptors;
 
 import com.github.thorbenkuck.ddt.execution.LifeCycle;
 import com.github.thorbenkuck.ddt.execution.context.ConfigurableExecutionContext;
+import com.github.thorbenkuck.ddt.selectors.Identification;
 import org.junit.platform.engine.UniqueId;
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor;
 import org.junit.platform.engine.support.descriptor.ClassSource;
@@ -10,8 +11,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.github.thorbenkuck.ddt.DataDrivenTestEngine.IS_DATA_DRIVEN_TEST_METHOD;
 
 public class TestClassDescriptor extends AbstractTestDescriptor implements DataDrivenDescriptor {
 
@@ -34,7 +33,7 @@ public class TestClassDescriptor extends AbstractTestDescriptor implements DataD
 
     public static TestClassDescriptor build(UniqueId engineId, Class<?> root) {
         return build(engineId, root, Arrays.stream(root.getMethods())
-                        .filter(IS_DATA_DRIVEN_TEST_METHOD)
+                        .filter(Identification.isTestScenario())
                         .collect(Collectors.toList()));
     }
 
