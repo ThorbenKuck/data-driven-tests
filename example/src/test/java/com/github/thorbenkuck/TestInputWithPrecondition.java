@@ -19,11 +19,11 @@ public class TestInputWithPrecondition {
     }
 
     public static TestInputWithPrecondition successfulLogin(UserEntity precondition) {
-        return new TestInputWithPrecondition(new LoginUserDto(precondition.getEmail(), precondition.getPassword()), precondition);
+        return new TestInputWithPrecondition(LoginUserDto.successfulLogin((precondition)), precondition);
     }
 
     public static TestInputWithPrecondition unsuccessfulLogin(UserEntity precondition) {
-        return new TestInputWithPrecondition(new LoginUserDto(precondition.getEmail(), precondition.getPassword() + "_WRONG"), precondition);
+        return new TestInputWithPrecondition(LoginUserDto.unsuccessfulLogin((precondition)), precondition);
     }
 
     public LoginUserDto getLoginUserDto() {

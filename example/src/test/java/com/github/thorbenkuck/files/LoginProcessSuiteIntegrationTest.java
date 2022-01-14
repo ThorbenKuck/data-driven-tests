@@ -5,8 +5,8 @@ import com.github.thorbenkuck.domain.UserEntity;
 import com.github.thorbenkuck.domain.UserRepository;
 import com.github.thorbenkuck.framework.*;
 import com.github.thorbenkuck.ddt.api.annotations.TestScenario;
-import com.github.thorbenkuck.ddt.api.annotations.lifecycle.AfterScenario;
-import com.github.thorbenkuck.ddt.api.annotations.lifecycle.BeforeScenario;
+import com.github.thorbenkuck.ddt.api.annotations.marker.AfterCase;
+import com.github.thorbenkuck.ddt.api.annotations.marker.BeforeCase;
 import com.github.thorbenkuck.ddt.api.SuiteType;
 import com.github.thorbenkuck.ddt.asserters.AssertJEquals;
 import org.junit.jupiter.api.*;
@@ -29,7 +29,7 @@ public class LoginProcessSuiteIntegrationTest {
         System.out.println("Before All");
     }
 
-    @BeforeScenario
+    @BeforeCase
     public void beforeScenario() {
         System.out.println("Before Scenario");
     }
@@ -44,7 +44,7 @@ public class LoginProcessSuiteIntegrationTest {
         System.out.println("After Each");
     }
 
-    @AfterScenario
+    @AfterCase
     public void afterScenario() {
         System.out.println("After Scenario");
     }

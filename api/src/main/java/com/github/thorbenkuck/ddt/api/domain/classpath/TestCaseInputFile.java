@@ -1,8 +1,8 @@
 package com.github.thorbenkuck.ddt.api.domain.classpath;
 
 import com.github.thorbenkuck.ddt.api.annotations.TestScenario;
-import com.github.thorbenkuck.ddt.Paths;
-import com.github.thorbenkuck.ddt.api.services.adapter.TypeConverterAdapterRegistry;
+import com.github.thorbenkuck.ddt.util.Paths;
+import com.github.thorbenkuck.ddt.api.registry.TypeConverterAdapterRegistry;
 import com.github.thorbenkuck.ddt.api.domain.TypeConverterAdapter;
 import com.github.thorbenkuck.ddt.api.domain.TestCaseInput;
 

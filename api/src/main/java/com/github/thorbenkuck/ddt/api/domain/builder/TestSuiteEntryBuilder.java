@@ -1,10 +1,15 @@
 package com.github.thorbenkuck.ddt.api.domain.builder;
 
-import com.github.thorbenkuck.ddt.api.domain.factory.TestCaseEntry;
+import com.github.thorbenkuck.ddt.api.domain.factory.FactoryTestCaseEntry;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestSuiteEntryBuilder<Input, Expected> {
 
     private final TestSuiteBuilder<Input, Expected> builder;
+    private final List<Object> preconditions = new ArrayList<>();
     private final String name;
 
     public TestSuiteEntryBuilder(TestSuiteBuilder<Input, Expected> builder, String name) {
@@ -15,6 +20,18 @@ public class TestSuiteEntryBuilder<Input, Expected> {
     public TestSuiteEntryBuilder(TestSuiteBuilder<Input, Expected> builder) {
         this.builder = builder;
         this.name = null;
+    }
+
+    public TestSuiteEntryBuilder<Input, Expected> withPrecondition(Object precondition) {
+        preconditions.add(precondition);
+
+        return this;
+    }
+
+    public TestSuiteEntryBuilder<Input, Expected> withPreconditions(Object... precondition) {
+        preconditions.addAll(Arrays.asList(precondition));
+
+        return this;
     }
 
     public TestSuiteBuilder<Input, Expected> withInputOnly(Input input) {
@@ -32,11 +49,12 @@ public class TestSuiteEntryBuilder<Input, Expected> {
             this.input = input;
         }
 
-        public TestSuiteBuilder<Input, Expected> expects(Expected expected) {
+        public TestSuiteBuilder<Input, Expected> expect(Expected expected) {
             return builder.append(
-                    TestCaseEntry.<Input, Expected>build()
+                    FactoryTestCaseEntry.<Input, Expected>build()
                             .withName(name)
                             .forInput(input)
+                            .andAllPreconditions(preconditions)
                             .expects(expected)
                             .build()
             );

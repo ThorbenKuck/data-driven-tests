@@ -1,6 +1,6 @@
 package com.github.thorbenkuck.ddt.asserters.json;
 
-import com.github.thorbenkuck.ddt.api.annotations.AssertedBy;
+import com.github.thorbenkuck.ddt.api.annotations.importer.AssertedBy;
 
 import java.lang.annotation.*;
 

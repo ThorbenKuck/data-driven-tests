@@ -1,21 +1,27 @@
 package com.github.thorbenkuck.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import com.github.thorbenkuck.framework.DAO;
+
+import java.util.*;
 
 public class UserRepository {
 
-    private static final Map<String, UserEntity> entities = new HashMap<>();
+    private Map<String, UserEntity> getTable() {
+        return DAO.getOrCreateTable(UserEntity.class);
+    }
 
-    public Optional<UserEntity> findByEmail(String id) { return Optional.ofNullable(entities.get(id)); }
+    public Optional<UserEntity> findByEmail(String id) { return Optional.ofNullable(getTable().get(id)); }
 
     public UserEntity save(UserEntity userEntity) {
-        entities.put(userEntity.getEmail(), userEntity);
+        getTable().put(userEntity.getEmail(), userEntity);
         return userEntity;
     }
 
+    public List<UserEntity> findAll() {
+        return new ArrayList<>(getTable().values());
+    }
+
     public void clear() {
-        entities.clear();
+        getTable().clear();
     }
 }

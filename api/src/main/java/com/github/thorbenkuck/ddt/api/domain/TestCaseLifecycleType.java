@@ -1,6 +1,6 @@
 package com.github.thorbenkuck.ddt.api.domain;
 
-import com.github.thorbenkuck.ddt.api.annotations.TestCaseLifecycle;
+import com.github.thorbenkuck.ddt.api.annotations.importer.ScenarioLifecycle;
 import org.junit.jupiter.api.TestInstance;
 
 import java.lang.reflect.Method;
@@ -23,7 +23,7 @@ public enum TestCaseLifecycleType {
     }
 
     public static Optional<TestCaseLifecycleType> valueOf(Method method) {
-        return Optional.ofNullable(method.getAnnotation(TestCaseLifecycle.class))
+        return Optional.ofNullable(method.getAnnotation(ScenarioLifecycle.class))
                 .map(annotation -> valueOf(annotation.value().name()));
     }
 

@@ -1,7 +1,7 @@
 package com.github.thorbenkuck.ddt.api.domain.factory;
 
 import com.github.thorbenkuck.ddt.api.domain.TestCaseOutput;
-import com.github.thorbenkuck.ddt.api.services.adapter.TypeConverterAdapterRegistry;
+import com.github.thorbenkuck.ddt.api.registry.TypeConverterAdapterRegistry;
 
 public class FactoryBasedTestCaseOutput<S> implements TestCaseOutput {
 

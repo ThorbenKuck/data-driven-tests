@@ -1,6 +1,6 @@
 package com.github.thorbenkuck.ddt.asserters.json;
 
-import com.github.thorbenkuck.ddt.api.annotations.ConsumesAnnotation;
+import com.github.thorbenkuck.ddt.api.annotations.marker.ConsumesAnnotation;
 import com.github.thorbenkuck.ddt.api.domain.Asserter;
 import org.opentest4j.AssertionFailedError;
 

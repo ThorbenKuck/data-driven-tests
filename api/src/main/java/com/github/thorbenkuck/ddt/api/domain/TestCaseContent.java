@@ -1,11 +1,15 @@
 package com.github.thorbenkuck.ddt.api.domain;
 
-import com.github.thorbenkuck.ddt.api.services.adapter.TypeConverterAdapterRegistry;
+import com.github.thorbenkuck.ddt.api.discovery.core.type.EngineCore;
+import com.github.thorbenkuck.ddt.api.registry.TypeConverterAdapterRegistry;
 import org.junit.platform.engine.TestSource;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 public interface TestCaseContent {
+
+    void addPreconditions(List<Object> preconditions);
 
     String rawName();
 
@@ -20,5 +24,11 @@ public interface TestCaseContent {
     TestCaseOutput output();
 
     TestCaseInput input();
+
+    List<Object> preconditions();
+
+    default List<TestCaseContent> subContent(EngineCore scenarioContext) {
+        throw new UnsupportedOperationException("Sub content not supported by default");
+    }
 
 }

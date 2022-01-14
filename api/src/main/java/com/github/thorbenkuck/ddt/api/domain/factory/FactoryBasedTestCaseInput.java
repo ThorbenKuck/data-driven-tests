@@ -2,14 +2,14 @@ package com.github.thorbenkuck.ddt.api.domain.factory;
 
 import com.github.thorbenkuck.ddt.api.annotations.TestScenario;
 import com.github.thorbenkuck.ddt.api.domain.TestCaseInput;
-import com.github.thorbenkuck.ddt.api.services.adapter.TypeConverterAdapterRegistry;
+import com.github.thorbenkuck.ddt.api.registry.TypeConverterAdapterRegistry;
 
 public class FactoryBasedTestCaseInput<T, S> implements TestCaseInput {
 
     private final T t;
-    private final TestCaseEntry<T, S> factoryResult;
+    private final FactoryTestCaseEntry<T, S> factoryResult;
 
-    public FactoryBasedTestCaseInput(TestCaseEntry<T, S> factoryResult) {
+    public FactoryBasedTestCaseInput(FactoryTestCaseEntry<T, S> factoryResult) {
         this.factoryResult = factoryResult;
         this.t = factoryResult.getInput();
     }
@@ -47,7 +47,7 @@ public class FactoryBasedTestCaseInput<T, S> implements TestCaseInput {
         return t.getClass();
     }
 
-    public TestCaseEntry<T, S> getFactoryResult() {
+    public FactoryTestCaseEntry<T, S> getFactoryResult() {
         return factoryResult;
     }
 }

@@ -1,9 +1,9 @@
 package com.github.thorbenkuck.ddt.api.domain.classpath;
 
-import com.github.thorbenkuck.ddt.Paths;
+import com.github.thorbenkuck.ddt.util.Paths;
 import com.github.thorbenkuck.ddt.api.domain.TestCaseOutput;
 import com.github.thorbenkuck.ddt.api.domain.TypeConverterAdapter;
-import com.github.thorbenkuck.ddt.api.services.adapter.TypeConverterAdapterRegistry;
+import com.github.thorbenkuck.ddt.api.registry.TypeConverterAdapterRegistry;
 
 import java.io.IOException;
 import java.nio.file.Files;

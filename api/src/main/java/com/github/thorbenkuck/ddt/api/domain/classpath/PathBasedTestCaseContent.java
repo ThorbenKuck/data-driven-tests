@@ -27,7 +27,7 @@ public class PathBasedTestCaseContent extends AbstractTestCaseContent<TestCaseIn
     @Override
     protected Optional<TestCaseOutputFile> resolveExpectedOutput(TestCaseInputFile testCaseInput, TestScenario annotation) {
         Path parent = testCaseInput.getPath().getParent();
-        return TestCaseOutputFile.resolve(parent, testCaseInput.getName(), annotation.expectedFlag());
+        return TestCaseOutputFile.resolve(parent, testCaseInput.getName(), annotation.expectedFileFlag());
     }
 
     @Override
